@@ -26,6 +26,7 @@ public class PhoneLoggerPlugin extends Plugin {
     private PhoneLogger pobj = new PhoneLogger();
     private CallComplete cobj = new CallComplete();
 
+
     @PluginMethod
     public void echo(PluginCall call) {
         String value = call.getString("value");
@@ -64,6 +65,7 @@ public class PhoneLoggerPlugin extends Plugin {
 
     @PluginMethod
     public void makeCall(PluginCall call) {
+        removeListener(call);
         String value = call.getString("phoneNumber", "");
         if (value == null || value.isEmpty()) {
             call.reject("phone number is required");
@@ -135,6 +137,7 @@ public class PhoneLoggerPlugin extends Plugin {
         // Respond back to JS immediately that call is initiated
         JSObject result = new JSObject();
         result.put("status", "call initiated");
+
         call.resolve(result);
     }
 
